@@ -1,5 +1,19 @@
-import type { FormEvent } from "react";
-import { ArrowUpRight, Github, Layers3, ShieldCheck, Sparkles } from "lucide-react";
+import { useState, type CSSProperties, type FormEvent } from "react";
+import {
+    ArrowDownRight,
+    ArrowUpRight,
+    BookOpen,
+    Check,
+    ExternalLink,
+    Github,
+    LayoutDashboard,
+    Mail,
+    Menu,
+    Palette,
+    ShieldCheck,
+    Sparkles,
+    X,
+} from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import art1 from "@/assets/art-1.jpg";
@@ -15,12 +29,9 @@ export const Route = createFileRoute("/")({
             {
                 name: "description",
                 content:
-                    "Akanksha Chaudhary is a product designer and UI/UX designer creating clear, expressive digital products.",
+                    "Akanksha Chaudhary is a product designer and Web3 builder creating clear, expressive digital products.",
             },
-            {
-                property: "og:title",
-                content: "Akanksha Chaudhary — Product designer & UI/UX designer",
-            },
+            { property: "og:title", content: "Akanksha Chaudhary — Product designer" },
             { property: "og:type", content: "website" },
         ],
     }),
@@ -28,19 +39,194 @@ export const Route = createFileRoute("/")({
 });
 
 const EMAIL = "akankshachaudhary567@gmail.com";
-const art = [
-    { src: art1, alt: "Abstract digital painting with aurora ribbons" },
-    { src: art2, alt: "Glossy ceramic vessel in warm studio light" },
-    { src: art3, alt: "Painterly digital character portrait" },
-    { src: art4, alt: "Isometric pastel living room" },
-    { src: art5, alt: "Generative artwork made from golden light streams" },
+const projects = [
+    {
+        number: "01",
+        name: "Saviours",
+        type: "Product design / Web3 / AI security",
+        description:
+            "Making onchain threat intelligence understandable before an agent signs a transaction.",
+        snapshot: "/saviours-live.png",
+        className: "project-saviours",
+        href: "https://www.saviours.xyz/",
+        liveLabel: "Open Saviours",
+        tags: ["Ethereum", "ENS", "AI agents", "$0 memory hit"],
+    },
+    {
+        number: "02",
+        name: "AI Prep",
+        type: "Product design / AI / Education",
+        description:
+            "A focused preparation experience that turns research, study plans, and practice into one flow.",
+        snapshot: "/aiprep-live.png",
+        className: "project-ai",
+        href: "https://aiprep-kappa.vercel.app/",
+        liveLabel: "Open AI Prep",
+        tags: ["UX strategy", "Information architecture"],
+    },
+    {
+        number: "03",
+        name: "ThemeVault",
+        type: "Product design / Frontend / Systems",
+        description:
+            "A playful theme playground for discovering, tuning, and exporting expressive UI systems.",
+        snapshot: "/theme-vault.png",
+        className: "project-theme",
+        href: "https://theme-vaultv1.vercel.app/",
+        liveLabel: "Open ThemeVault",
+        tags: ["Design systems", "React", "Tokens"],
+    },
+    {
+        number: "04",
+        name: "InView LMS",
+        type: "Product / UI/UX / Learning",
+        description: "Clearer learning flows and content architecture for people building a new skill.",
+        className: "project-inview",
+        liveLabel: "Case study soon",
+        tags: ["User flows", "Responsive design"],
+    },
 ];
-const experience = [
-    ["Saviours", "Onchain security / product design"],
-    ["ThemeVault", "Product design / frontend"],
-    ["InView LMS", "Learning experience / UI UX"],
-    ["yieldAI", "Product experience / crypto"],
-];
+const experiments = [art1, art2, art3, art4, art5];
+const showcaseProjects = [projects[0], projects[2], projects[1]];
+
+function ProjectVisual({ project }: { project: (typeof projects)[number] }) {
+    if (project.name === "Saviours") {
+        return (
+            <div className="product-visual saviours-visual">
+                <div className="visual-toolbar">
+                    <span>
+                        <i /> Saviours / memory
+                    </span>
+                    <small>LIVE</small>
+                </div>
+                <div className="threat-card">
+                    <div className="threat-icon">
+                        <ShieldCheck size={20} />
+                    </div>
+                    <div>
+                        <span>THREAT STATUS</span>
+                        <strong>TAINTED</strong>
+                        <small>Memory hit · resolved via ENS</small>
+                    </div>
+                    <b>BLOCK</b>
+                </div>
+                <div className="visual-metrics">
+                    <span>
+                        <small>confidence</small>
+                        <strong>98.4%</strong>
+                    </span>
+                    <span>
+                        <small>saved lookups</small>
+                        <strong>1,284</strong>
+                    </span>
+                    <span>
+                        <small>resolve cost</small>
+                        <strong>$0</strong>
+                    </span>
+                </div>
+                <div className="visual-command">
+                    <span>
+                        <i /> Agent signature paused
+                    </span>
+                    <Check size={15} />
+                </div>
+            </div>
+        );
+    }
+    if (project.name === "AI Prep") {
+        return (
+            <div className="product-visual prep-visual">
+                <div className="visual-toolbar">
+                    <span>
+                        <LayoutDashboard size={14} /> AI Prep / today
+                    </span>
+                    <small>12 day streak</small>
+                </div>
+                <div className="prep-heading">
+                    <span>Good morning, Akanksha</span>
+                    <strong>Your next best move</strong>
+                </div>
+                <div className="prep-progress">
+                    <span>
+                        <i style={{ width: "72%" }} />
+                    </span>
+                    <b>72%</b>
+                </div>
+                <div className="prep-list">
+                    <div>
+                        <span>01</span>
+                        <strong>Review product thinking</strong>
+                        <Check size={14} />
+                    </div>
+                    <div>
+                        <span>02</span>
+                        <strong>Practice one case study</strong>
+                        <div className="empty-check" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    if (project.name === "ThemeVault") {
+        return (
+            <div className="product-visual theme-visual">
+                <div className="visual-toolbar">
+                    <span>
+                        <Palette size={14} /> ThemeVault / studio
+                    </span>
+                    <small>EDITING</small>
+                </div>
+                <div className="theme-preview">
+                    <div className="theme-window">
+                        <span />
+                        <span />
+                        <span />
+                    </div>
+                    <strong>soft / electric</strong>
+                    <small>Live theme preview</small>
+                </div>
+                <div className="theme-controls">
+                    <span>
+                        <i className="swatch swatch-one" /> color
+                    </span>
+                    <span>
+                        <i className="swatch swatch-two" /> type
+                    </span>
+                    <span>
+                        <i className="swatch swatch-three" /> radius
+                    </span>
+                </div>
+            </div>
+        );
+    }
+    return (
+        <div className="product-visual inview-visual">
+            <div className="visual-toolbar">
+                <span>
+                    <BookOpen size={14} /> InView / library
+                </span>
+                <small>THIS WEEK</small>
+            </div>
+            <div className="course-card">
+                <span>COURSE PROGRESS</span>
+                <strong>
+                    Design systems
+                    <br />
+                    <em>from first principles.</em>
+                </strong>
+                <div>
+                    <i style={{ width: "64%" }} />
+                </div>
+                <small>8 of 12 lessons</small>
+            </div>
+            <div className="lesson-row">
+                <span>Next up</span>
+                <strong>Tokens that scale</strong>
+                <ArrowUpRight size={14} />
+            </div>
+        </div>
+    );
+}
 
 function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,276 +240,378 @@ function handleSubmit(event: FormEvent<HTMLFormElement>) {
 }
 
 function Index() {
+    const [cursor, setCursor] = useState({ x: -200, y: -200 });
+    const [activeShowcase, setActiveShowcase] = useState(0);
+    const activeProject = showcaseProjects[activeShowcase];
+    const cursorStyle = {
+        "--cursor-x": `${cursor.x}px`,
+        "--cursor-y": `${cursor.y}px`,
+    } as CSSProperties;
+
     return (
-        <div className="portfolio-shell min-h-screen overflow-hidden text-foreground">
+        <div
+            className="portfolio-shell min-h-screen overflow-hidden text-foreground"
+            style={cursorStyle}
+            onPointerMove={(event) => {
+                if (event.pointerType !== "touch") {
+                    setCursor({ x: event.clientX, y: event.clientY });
+                }
+            }}
+        >
             <div className="grain" aria-hidden="true" />
-            <header className="site-header mx-auto flex max-w-7xl items-center justify-between px-5 py-6 sm:px-8">
+            <div className="cursor-aura" aria-hidden="true" />
+            <header className="site-header mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8">
                 <a href="#top" className="brand-mark" aria-label="Akanksha Chaudhary home">
                     AC<span>.</span>
                 </a>
-                <nav className="flex items-center gap-5 text-xs uppercase tracking-[0.16em] text-muted-foreground sm:gap-8">
-                    <a href="#work" className="hover:text-foreground">
-                        Work
+                <nav className="desktop-nav" aria-label="Main navigation">
+                    <a href="#work">
+                        Work <span>01</span>
                     </a>
-                    <a href="#about" className="hover:text-foreground">
-                        About
+                    <a href="#about">
+                        About <span>02</span>
+                    </a>
+                    <a href="#resume">
+                        Resume <span>03</span>
+                    </a>
+                    <a href="/aksha.pdf" target="_blank" rel="noreferrer">
+                        PDF <span>↗</span>
                     </a>
                     <a href="#contact" className="nav-contact">
                         Let's talk <ArrowUpRight size={14} />
                     </a>
                 </nav>
+                <details className="mobile-nav">
+                    <summary aria-label="Open navigation">
+                        <Menu size={19} />
+                        <X size={19} />
+                    </summary>
+                    <div className="mobile-nav-panel">
+                        <a href="#work">
+                            Selected work <ArrowUpRight size={16} />
+                        </a>
+                        <a href="#about">
+                            About me <ArrowUpRight size={16} />
+                        </a>
+                        <a href="#resume">
+                            Resume <ArrowUpRight size={16} />
+                        </a>
+                        <a href="#contact">
+                            Let's talk <ArrowUpRight size={16} />
+                        </a>
+                    </div>
+                </details>
             </header>
+
             <main id="top">
-                <section className="hero mx-auto grid max-w-7xl gap-12 px-5 pb-24 pt-16 sm:px-8 sm:pt-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-                    <div className="hero-copy">
+                <section className="hero mx-auto max-w-7xl px-5 pb-20 pt-16 sm:px-8 sm:pb-28 sm:pt-24">
+                    <div className="hero-topline">
                         <p className="eyebrow">
                             <span className="eyebrow-dot" /> Product designer · UI/UX designer · visual thinker
                         </p>
-                        <h1>
-                            Designing the <em>trust layer</em> for the next internet.
-                        </h1>
-                        <p className="hero-intro">
-                            I’m Akanksha, a product designer focused on UI/UX, visual systems, and thoughtful
-                            digital experiences. I turn complicated systems into products people can understand,
-                            trust, and actually use.
+                        <p className="hero-index">
+                            Product designer / Web3 builder <span>© 2026</span>
                         </p>
-                        <div className="hero-actions">
-                            <a href="#work" className="button button-dark">
-                                See the build <ArrowUpRight size={16} />
-                            </a>
+                    </div>
+                    <div className="hero-grid">
+                        <div className="hero-copy">
+                            <h1>
+                                Designing the <em>trust layer</em> for the next internet.
+                            </h1>
+                            <p className="hero-intro">
+                                I’m Akanksha, a product designer focused on UI/UX, visual systems, and trustworthy
+                                digital experiences. I turn complex ideas into products people can understand, use,
+                                and believe in.
+                            </p>
+                            <div className="hero-actions">
+                                <a href="#work" className="button button-dark">
+                                    Explore selected work <ArrowDownRight size={16} />
+                                </a>
+                                <a href={`mailto:${EMAIL}`} className="text-link">
+                                    <Mail size={15} /> Start a conversation
+                                </a>
+                            </div>
+                        </div>
+                        <div className="hero-visual">
+                            <div className="hero-orbit hero-orbit-one">DESIGN / SYSTEMS / CARE</div>
+                            <div className="hero-product-wrap">
+                                <div className="hero-product-heading">
+                                    <span>
+                                        <Sparkles size={13} /> LIVE BUILD / 01
+                                    </span>
+                                    <small>SAFETY MEMORY</small>
+                                </div>
+                                <div className="hero-verdict">
+                                    <div className="hero-verdict-icon">
+                                        <ShieldCheck size={26} />
+                                    </div>
+                                    <div>
+                                        <small>WALLET CHECK / ENS</small>
+                                        <strong>TAINTED</strong>
+                                        <span>Known threat detected before signature</span>
+                                    </div>
+                                </div>
+                                <div className="hero-signal-row">
+                                    <span>
+                                        <i /> AGENT FLOW PAUSED
+                                    </span>
+                                    <b>98.4% confidence</b>
+                                </div>
+                                <div className="hero-product-foot">
+                                    <span>0x935b...de48</span>
+                                    <span>
+                                        resolve cost <b>$0</b>
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="hero-note">
+                                <ShieldCheck size={17} />
+                                <span>Currently designing safer, clearer tools for the next internet.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="scroll-cue">
+                        <ArrowDownRight size={16} /> Scroll to see the work <span>↓</span>
+                    </div>
+                </section>
+
+                <div className="live-build-strip" aria-label="Live project links">
+                    <div className="live-build-track">
+                        <span>
+                            <i /> LIVE BUILDS
+                        </span>
+                        <a href="https://www.saviours.xyz/" target="_blank" rel="noreferrer noopener">
+                            Saviours <ArrowUpRight size={13} />
+                        </a>
+                        <b>·</b>
+                        <a href="https://theme-vaultv1.vercel.app/" target="_blank" rel="noreferrer noopener">
+                            ThemeVault <ArrowUpRight size={13} />
+                        </a>
+                        <b>·</b>
+                        <a href="https://aiprep-kappa.vercel.app/" target="_blank" rel="noreferrer noopener">
+                            AI Prep <ArrowUpRight size={13} />
+                        </a>
+                        <b>·</b>
+                        <span>DESIGN / SYSTEMS / CARE</span>
+                    </div>
+                </div>
+
+                <section id="work" className="work-section mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
+                    <div className="section-intro">
+                        <div className="section-label">
+                            <span>01</span>
+                            <span>Selected work</span>
+                        </div>
+                        <p>
+                            Real products, real links, and the design decisions behind Web3, AI, and learning
+                            tools.
+                        </p>
+                    </div>
+                    <div className="showcase-shell">
+                        <div className="showcase-copy">
+                            <div className="showcase-meta">
+                                <span>
+                                    <i /> LIVE PROJECT / 0{activeShowcase + 1}
+                                </span>
+                                <small>CLICK TO EXPLORE</small>
+                            </div>
+                            <p className="project-type">{activeProject.type}</p>
+                            <h2>{activeProject.name}</h2>
+                            <p className="showcase-description">{activeProject.description}</p>
+                            <div className="showcase-tags">
+                                {activeProject.tags.map((tag) => (
+                                    <span key={tag}>{tag}</span>
+                                ))}
+                            </div>
                             <a
-                                href="https://www.saviours.xyz/"
+                                className="showcase-link"
+                                href={activeProject.href}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                className="text-link"
                             >
-                                <span className="live-dot" /> Try Saviours
+                                Open live product <ArrowUpRight size={15} />
                             </a>
-                        </div>
-                    </div>
-                    <div className="hero-signal">
-                        <div className="signal-top">
-                            <span className="signal-pulse" /> LIVE BUILD / 01
-                        </div>
-                        <div className="signal-screen">
-                            <div className="signal-address">
-                                0x935b...de48 <span>ENS</span>
-                            </div>
-                            <div className="signal-verdict">
-                                <ShieldCheck size={22} />
-                                <div>
-                                    <strong>TAINTED</strong>
-                                    <small>memory hit · resolve $0</small>
-                                </div>
-                            </div>
-                            <div className="signal-line">
-                                <span /> Saviours blocked a risky signature before MetaMask opened.
+                            <div className="showcase-tabs" role="tablist" aria-label="Featured live projects">
+                                {showcaseProjects.map((project, index) => (
+                                    <button
+                                        key={project.name}
+                                        className={index === activeShowcase ? "is-active" : ""}
+                                        onClick={() => setActiveShowcase(index)}
+                                        role="tab"
+                                        aria-selected={index === activeShowcase}
+                                    >
+                                        {project.name}
+                                        <span>0{index + 1}</span>
+                                    </button>
+                                ))}
                             </div>
                         </div>
-                        <div className="signal-caption">
-                            <Sparkles size={15} /> A product case study in public, composable security.
+                        <div className={`showcase-screen ${activeProject.className}`}>
+                            <img
+                                src={activeProject.snapshot}
+                                alt={`${activeProject.name} live product showcase`}
+                            />
+                            <div className="showcase-caption">
+                                <span>REAL INTERFACE</span>
+                                <strong>{activeProject.name}</strong>
+                                <small>Designed for clarity, not decoration.</small>
+                            </div>
                         </div>
                     </div>
                 </section>
-                <section id="work" className="feature-section mx-auto max-w-7xl px-5 sm:px-8">
-                    <div className="section-label">
-                        <span>01</span>
-                        <span>Featured case study</span>
-                    </div>
-                    <article className="saviours-feature">
-                        <div className="feature-heading">
-                            <div>
-                                <p className="kicker">Saviours · onchain security / product / frontend</p>
-                                <h2>
-                                    Investigate once.
-                                    <br />
-                                    <em>Resolve free, forever.</em>
-                                </h2>
-                            </div>
-                            <p className="feature-summary">
-                                A public threat-memory layer for agents and wallets. Saviours turns expensive
-                                onchain investigation into a permanent ENS-resolved safety signal.
-                            </p>
-                        </div>
-                        <div className="saviours-stage">
-                            <div className="stage-grid" aria-hidden="true" />
-                            <div className="stage-card stage-main">
-                                <div className="stage-label">MEMORY HIT · SOURCE=ENS</div>
-                                <div className="stage-status">
-                                    <span className="stop-icon" /> BLOCK
-                                </div>
-                                <h3>TAINTED</h3>
-                                <p>
-                                    FLASHLOAN_ONE_SHOT
-                                    <br />
-                                    ATOMIC_MULTI_PROTOCOL
-                                </p>
-                                <div className="stage-meta">
-                                    <span>ENS resolve</span>
-                                    <strong>$0</strong>
-                                    <span>·</span>
-                                    <span>4572 ms</span>
-                                </div>
-                            </div>
-                            <div className="stage-card stage-side">
-                                <div className="stage-label">KILL SWITCH · LIVE PROOF</div>
-                                <h3>
-                                    CAST WORKS
-                                    <br />
-                                    <em>IF WE DIE</em>
-                                </h3>
-                                <div className="stage-check">
-                                    <ShieldCheck size={16} /> Public Sepolia proof
-                                </div>
-                                <div className="stage-tags">
-                                    <span>The Graph</span>
-                                    <span>ENSv2</span>
-                                    <span>Bazantic</span>
-                                </div>
-                            </div>
-                            <div className="stage-orbit orbit-one">01 / CHECK MEMORY</div>
-                            <div className="stage-orbit orbit-two">02 / BLOCK OR WARN</div>
-                        </div>
-                        <div className="proof-grid">
-                            <div>
-                                <span className="proof-number">01</span>
-                                <strong>Memory before signature</strong>
-                                <p>
-                                    Check saviours.status first. A known threat stops the flow before the wallet
-                                    prompt.
-                                </p>
-                            </div>
-                            <div>
-                                <span className="proof-number">02</span>
-                                <strong>Agent pays on miss</strong>
-                                <p>
-                                    Discovery is metered once. Every agent after the first gets the resolve for free.
-                                </p>
-                            </div>
-                            <div>
-                                <span className="proof-number">03</span>
-                                <strong>Server can disappear</strong>
-                                <p>
-                                    The verdict lives in ENS. The product stays useful even when the gateway is gone.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="feature-footer">
-                            <div className="feature-facts">
-                                <span>The Graph</span>
-                                <span>ENSv2</span>
-                                <span>Bazantic</span>
-                                <span>Sepolia</span>
-                            </div>
-                            <div className="feature-links">
-                                <a href="https://www.saviours.xyz/" target="_blank" rel="noreferrer noopener">
-                                    Open live product <ArrowUpRight size={16} />
-                                </a>
-                                <a
-                                    href="https://www.saviours.xyz/gateway"
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                >
-                                    Explore gateway <ArrowUpRight size={16} />
-                                </a>
-                                <a
-                                    href="https://ethglobal.com/showcase/saviour-9j673"
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                >
-                                    View project showcase <ArrowUpRight size={16} />
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </section>
-                <section className="principles-band">
-                    <div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:py-28">
+
+                <section id="about" className="manifesto-section">
+                    <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[0.9fr_1.1fr]">
                         <div>
                             <p className="section-label light">
                                 <span>02</span>
-                                <span>My point of view</span>
+                                <span>Point of view</span>
                             </p>
-                            <h2>
-                                Good design starts <em>before</em> the screen.
-                            </h2>
-                        </div>
-                        <div className="principles-copy">
-                            <p>
-                                I care about the full journey: how someone finds a product, understands it, makes a
-                                decision, and chooses to come back. The polished pixels matter, but so does the
-                                thinking underneath them.
-                            </p>
-                            <p>
-                                My background across product design, teaching, curriculum, and community keeps me
-                                close to the people on the other side of the interface. I like making complex things
-                                feel clear without sanding off their personality.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-                <section id="about" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
-                    <div className="section-label">
-                        <span>03</span>
-                        <span>Selected experience</span>
-                    </div>
-                    <div className="experience-grid">
-                        <div>
-                            <h2>
-                                Different problems.
+                            <p className="manifesto-stamp">
+                                GOOD
                                 <br />
-                                <em>Same curiosity.</em>
-                            </h2>
-                            <p className="muted-copy">
-                                From learning platforms to crypto products and NFT worlds, I bring product thinking,
-                                visual craft, and a bias toward making the thing real.
+                                DESIGN
+                                <br />
+                                <em>FEELS</em>
+                                <br />
+                                OBVIOUS.
                             </p>
                         </div>
-                        <div className="experience-list">
-                            {experience.map(([name, role], index) => (
-                                <div className="experience-row" key={name}>
-                                    <span>0{index + 1}</span>
-                                    <strong>{name}</strong>
-                                    <small>{role}</small>
-                                    <ArrowUpRight size={17} />
-                                </div>
-                            ))}
+                        <div className="manifesto-copy">
+                            <p className="manifesto-lede">
+                                The best products make a complicated thing feel like it was always meant to be that
+                                way.
+                            </p>
+                            <p>
+                                I work from early ideas to real interfaces: user journeys, visual systems,
+                                prototypes, and the details that help people feel oriented. My background in
+                                teaching and community keeps me close to the questions people actually have.
+                            </p>
+                            <a href="#resume" className="underlined-link">
+                                A little more about how I work <ArrowUpRight size={15} />
+                            </a>
                         </div>
                     </div>
                 </section>
-                <section className="art-section mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
-                    <div className="section-label">
-                        <span>04</span>
-                        <span>When pixels become play</span>
-                    </div>
-                    <div className="art-heading">
-                        <h2>
-                            A side quest in <em>visual worlds.</em>
-                        </h2>
+
+                <section
+                    id="resume"
+                    className="resume-section mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28"
+                >
+                    <div className="section-intro">
+                        <div className="section-label">
+                            <span>03</span>
+                            <span>Experience & toolkit</span>
+                        </div>
                         <p>
-                            Traditional painting, 3D, motion, memes, and the odd experiment that refuses to fit in
-                            a portfolio category.
+                            A product practice shaped by curiosity, teaching, and getting close to the people
+                            using the thing.
                         </p>
                     </div>
-                    <div className="art-strip">
-                        {art.map((piece) => (
-                            <img key={piece.src} src={piece.src} alt={piece.alt} loading="lazy" />
+                    <div className="resume-grid">
+                        <div className="resume-column">
+                            <p className="resume-label">Experience</p>
+                            <div className="resume-item">
+                                <div>
+                                    <h3>Freelance product designer</h3>
+                                    <p>Independent · 2021 — Present</p>
+                                </div>
+                                <p>
+                                    Designing product interfaces, user journeys, and visual systems for early-stage
+                                    products across Web3, AI, education, and developer tools.
+                                </p>
+                            </div>
+                            <div className="resume-item">
+                                <div>
+                                    <h3>Freelance teacher & curriculum creator</h3>
+                                    <p>Independent · 2021 — Present</p>
+                                </div>
+                                <p>
+                                    Creating structured learning materials that make complex concepts easier to
+                                    understand through clear explanations and practical examples.
+                                </p>
+                            </div>
+                            <div className="resume-item">
+                                <div>
+                                    <h3>Community manager</h3>
+                                    <p>Web3 & technology communities</p>
+                                </div>
+                                <p>
+                                    Supporting communities through product communication, user feedback, and content
+                                    that builds trust around emerging technology.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="resume-column">
+                            <p className="resume-label">Capabilities</p>
+                            <div className="capability-list">
+                                <span>UI / UX design</span>
+                                <span>Product strategy</span>
+                                <span>Information architecture</span>
+                                <span>Prototyping</span>
+                                <span>Design systems</span>
+                                <span>Ethereum & ENS</span>
+                                <span>React / TypeScript</span>
+                                <span>AI product design</span>
+                            </div>
+                            <div className="education">
+                                <p className="resume-label">Education</p>
+                                <h3>University of Delhi</h3>
+                                <p>Bachelor of Science (B.Sc.)</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="experiments-section mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
+                    <div className="section-intro">
+                        <div className="section-label">
+                            <span>04</span>
+                            <span>Side quests</span>
+                        </div>
+                        <p>Painting, 3D, motion, and visual experiments that keep the work curious.</p>
+                    </div>
+                    <div className="experiment-strip">
+                        {experiments.map((src, index) => (
+                            <img key={src} src={src} alt={`Visual experiment ${index + 1}`} loading="lazy" />
                         ))}
                     </div>
                 </section>
+
                 <section id="contact" className="contact-section mx-auto max-w-7xl px-5 pb-8 sm:px-8">
                     <div className="contact-inner">
                         <div>
-                            <Layers3 size={22} />
                             <p className="kicker">Have a product in mind?</p>
                             <h2>
-                                Let’s make it
-                                <br />
-                                <em>feel like something.</em>
+                                Let’s make it <em>feel like something.</em>
                             </h2>
                             <a className="email-link" href={`mailto:${EMAIL}`}>
                                 {EMAIL} <ArrowUpRight size={17} />
                             </a>
+                            <div className="social-links">
+                                <a
+                                    href="https://github.com/Akshach"
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    aria-label="GitHub"
+                                >
+                                    <Github size={18} />
+                                </a>
+                                <a
+                                    href="https://x.com/Aksha1812"
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    aria-label="X profile"
+                                >
+                                    <span className="social-letter">𝕏</span>
+                                </a>
+                                <a href={`mailto:${EMAIL}`} aria-label="Email">
+                                    <Mail size={18} />
+                                </a>
+                                <a href="#top" aria-label="Back to top">
+                                    <ArrowUpRight size={18} />
+                                </a>
+                            </div>
                         </div>
                         <form onSubmit={handleSubmit} className="contact-form" aria-label="Contact form">
                             <input name="name" required placeholder="Your name" />
@@ -336,8 +624,8 @@ function Index() {
                     </div>
                     <footer>
                         <span>Akanksha Chaudhary · Product, UI/UX & visual design</span>
-                        <a href="https://github.com/Akshach" target="_blank" rel="noreferrer noopener">
-                            GitHub <ArrowUpRight size={13} />
+                        <a href="https://x.com/Aksha1812" target="_blank" rel="noreferrer noopener">
+                            X / @Aksha1812 <ArrowUpRight size={13} />
                         </a>
                         <span>© 2026</span>
                     </footer>
