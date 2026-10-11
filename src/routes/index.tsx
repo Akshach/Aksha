@@ -432,6 +432,22 @@ function Index() {
                                 </div>
                             </button>
                             <span className="hero-interaction-hint">Click the safety check to explore the state</span>
+                            <div className="hero-flow" aria-label="Saviours product flow">
+                                {["Investigate", "Remember", "Resolve"].map((stage, index) => (
+                                    <span
+                                        key={stage}
+                                        className={
+                                            (heroState === "detected" && index === 0) ||
+                                            (heroState === "resolved" && index === 2)
+                                                ? "is-active"
+                                                : ""
+                                        }
+                                    >
+                                        <i>{String(index + 1).padStart(2, "0")}</i>
+                                        {stage}
+                                    </span>
+                                ))}
+                            </div>
                             <div className="hero-note">
                                 <ShieldCheck size={17} />
                                 <span>Currently designing safer, clearer tools for the next internet.</span>
@@ -448,6 +464,8 @@ function Index() {
                         <span>
                             <i /> LIVE BUILDS
                         </span>
+                        <b>3 products live</b>
+                        <b>·</b>
                         <a href="https://www.saviours.xyz/" target="_blank" rel="noreferrer noopener">
                             Saviours <ArrowUpRight size={13} />
                         </a>
