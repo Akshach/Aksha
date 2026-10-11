@@ -54,6 +54,8 @@ const projects = [
         darkAspect: "2.12 / 1",
         className: "project-saviours",
         href: "https://www.saviours.xyz/",
+        caseStudyHref: "/work/saviours",
+        caseStudyStatus: "published" as const,
         liveLabel: "Open Saviours",
         tags: ["Ethereum", "ENS", "AI agents", "$0 memory hit"],
     },
@@ -69,6 +71,8 @@ const projects = [
         darkAspect: "1.55 / 1",
         className: "project-ai",
         href: "https://aiprep-kappa.vercel.app/",
+        caseStudyHref: "/work/ai-prep",
+        caseStudyStatus: "published" as const,
         liveLabel: "Open AI Prep",
         tags: ["UX strategy", "Information architecture"],
     },
@@ -84,6 +88,8 @@ const projects = [
         darkAspect: "1.73 / 1",
         className: "project-theme",
         href: "https://theme-vaultv1.vercel.app/",
+        caseStudyHref: "/work/themevault",
+        caseStudyStatus: "published" as const,
         liveLabel: "Open ThemeVault",
         tags: ["Design systems", "React", "Tokens"],
     },
@@ -93,6 +99,8 @@ const projects = [
         type: "Product / UI/UX / Learning",
         description: "Clearer learning flows and content architecture for people building a new skill.",
         className: "project-inview",
+        caseStudyHref: null,
+        caseStudyStatus: "in-progress" as const,
         liveLabel: "Case study soon",
         tags: ["User flows", "Responsive design"],
     },
@@ -255,7 +263,8 @@ function Index() {
     const [isDark, setIsDark] = useState(false);
     const [themeReady, setThemeReady] = useState(false);
     const [activeShowcase, setActiveShowcase] = useState(0);
-    const activeProject = showcaseProjects[activeShowcase];
+    const [heroState, setHeroState] = useState<"detected" | "resolved">("detected");
+    const activeProject = showcaseProjects[activeShowcase] ?? showcaseProjects[0]!;
     const cursorStyle = {
         "--cursor-x": `${cursor.x}px`,
         "--cursor-y": `${cursor.y}px`,
@@ -269,7 +278,7 @@ function Index() {
 
     useEffect(() => {
         if (!themeReady) return;
-        document.documentElement.dataset.theme = isDark ? "dark" : "light";
+        document.documentElement.dataset["theme"] = isDark ? "dark" : "light";
         window.localStorage.setItem("aksha-theme", isDark ? "dark" : "light");
     }, [isDark, themeReady]);
 
@@ -355,10 +364,14 @@ function Index() {
                                 Designing the <em>trust layer</em> for the next internet.
                             </h1>
                             <p className="hero-intro">
-                                I’m Akanksha, a product designer focused on UI/UX, visual systems, and trustworthy
-                                digital experiences. I turn complex ideas into products people can understand, use,
-                                and believe in.
+                                I’m Akanksha, a product designer creating clear, trustworthy experiences for complex
+                                products across Web3, AI, education, and design systems.
                             </p>
+                            <div className="hero-proof" aria-label="Portfolio highlights">
+                                <span><strong>3</strong> live products</span>
+                                <span><strong>4+</strong> years designing</span>
+                                <span><strong>4</strong> focus areas</span>
+                            </div>
                             <div className="hero-actions">
                                 <a href="#work" className="button button-dark">
                                     Explore selected work <ArrowDownRight size={16} />
@@ -370,7 +383,12 @@ function Index() {
                         </div>
                         <div className="hero-visual">
                             <div className="hero-orbit hero-orbit-one">DESIGN / SYSTEMS / CARE</div>
-                            <div className="hero-product-wrap">
+                            <button
+                                className={`hero-product-wrap hero-product-state-${heroState}`}
+                                type="button"
+                                aria-label={`Safety memory status: ${heroState}. Click to ${heroState === "detected" ? "resolve the threat" : "show the threat again"}.`}
+                                onClick={() => setHeroState((state) => (state === "detected" ? "resolved" : "detected"))}
+                            >
                                 <div className="hero-product-heading">
                                     <span>
                                         <Sparkles size={13} /> LIVE BUILD / 01
@@ -383,23 +401,29 @@ function Index() {
                                     </div>
                                     <div>
                                         <small>WALLET CHECK / ENS</small>
-                                        <strong>TAINTED</strong>
-                                        <span>Known threat detected before signature</span>
+                                        <strong>{heroState === "detected" ? "TAINTED" : "RESOLVED"}</strong>
+                                        <span>
+                                            {heroState === "detected"
+                                                ? "Known threat detected before signature"
+                                                : "Memory match resolved before signature"}
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="hero-signal-row">
                                     <span>
-                                        <i /> AGENT FLOW PAUSED
+                                        <i /> {heroState === "detected" ? "AGENT FLOW PAUSED" : "AGENT FLOW CLEARED"}
                                     </span>
                                     <b>98.4% confidence</b>
                                 </div>
                                 <div className="hero-product-foot">
                                     <span>0x935b...de48</span>
                                     <span>
-                                        resolve cost <b>$0</b>
+                                        {heroState === "detected" ? "click to resolve" : "resolve cost"}{" "}
+                                        <b>{heroState === "detected" ? "↗" : "$0"}</b>
                                     </span>
                                 </div>
-                            </div>
+                            </button>
+                            <span className="hero-interaction-hint">Click the safety check to explore the state</span>
                             <div className="hero-note">
                                 <ShieldCheck size={17} />
                                 <span>Currently designing safer, clearer tools for the next internet.</span>
@@ -459,6 +483,18 @@ function Index() {
                                     <span key={tag}>{tag}</span>
                                 ))}
                             </div>
+                            {activeProject.caseStudyHref ? (
+                                <a
+                                    className="showcase-link showcase-case-study"
+                                    href={activeProject.caseStudyHref}
+                                >
+                                    Read case study <ArrowUpRight size={15} />
+                                </a>
+                            ) : (
+                                <span className="showcase-link showcase-case-study showcase-link-disabled">
+                                    Case study in progress <span aria-hidden="true">↗</span>
+                                </span>
+                            )}
                             <a
                                 className="showcase-link"
                                 href={activeProject.href}
@@ -470,19 +506,24 @@ function Index() {
                             <div className="showcase-tabs" role="tablist" aria-label="Featured live projects">
                                 {showcaseProjects.map((project, index) => (
                                     <button
-                                        key={project.name}
+                                        key={project!.name}
+                                        id={`project-tab-${index}`}
                                         className={index === activeShowcase ? "is-active" : ""}
                                         onClick={() => setActiveShowcase(index)}
                                         role="tab"
                                         aria-selected={index === activeShowcase}
+                                        aria-controls="project-showcase-panel"
                                     >
-                                        {project.name}
+                                        {project!.name}
                                         <span>0{index + 1}</span>
                                     </button>
                                 ))}
                             </div>
                         </div>
                         <div
+                            id="project-showcase-panel"
+                            role="tabpanel"
+                            aria-labelledby={`project-tab-${activeShowcase}`}
                             className={`showcase-screen ${activeProject.className}`}
                             style={
                                 {
@@ -502,6 +543,27 @@ function Index() {
                                 <span>REAL INTERFACE</span>
                                 <strong>{activeProject.name}</strong>
                                 <small>Designed for clarity, not decoration.</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="now-section mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
+                    <div className="now-card">
+                        <div className="now-marker">
+                            <span className="eyebrow-dot" /> Exploration / 2026
+                        </div>
+                        <div className="now-content">
+                            <div>
+                                <p className="project-type">Currently building</p>
+                                <h2>TALE</h2>
+                            </div>
+                            <div>
+                                <p className="now-description">
+                                    Turning onchain activity into a human story — a wallet identity experience built
+                                    around meaning, memory, and shareable moments.
+                                </p>
+                                <p className="now-meta">AI interpretation · wallet identity · visual storytelling</p>
                             </div>
                         </div>
                     </div>
@@ -661,9 +723,28 @@ function Index() {
                             </div>
                         </div>
                         <form onSubmit={handleSubmit} className="contact-form" aria-label="Contact form">
-                            <input name="name" required placeholder="Your name" />
-                            <input name="email" required type="email" placeholder="Your email" />
-                            <textarea name="message" required rows={3} placeholder="Tell me a little about it" />
+                            <input
+                                name="name"
+                                required
+                                autoComplete="name"
+                                aria-label="Your name"
+                                placeholder="Your name"
+                            />
+                            <input
+                                name="email"
+                                required
+                                type="email"
+                                autoComplete="email"
+                                aria-label="Your email"
+                                placeholder="Your email"
+                            />
+                            <textarea
+                                name="message"
+                                required
+                                rows={3}
+                                aria-label="Project details"
+                                placeholder="Tell me a little about it"
+                            />
                             <button className="button button-light" type="submit">
                                 Send enquiry <ArrowUpRight size={16} />
                             </button>

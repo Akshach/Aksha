@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WorkAiPrepRouteImport } from './routes/work/ai-prep'
+import { Route as WorkSavioursRouteImport } from './routes/work/saviours'
+import { Route as WorkThemevaultRouteImport } from './routes/work/themevault'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkAiPrepRoute = WorkAiPrepRouteImport.update({
+  id: '/work/ai-prep',
+  path: '/work/ai-prep',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkSavioursRoute = WorkSavioursRouteImport.update({
+  id: '/work/saviours',
+  path: '/work/saviours',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkThemevaultRoute = WorkThemevaultRouteImport.update({
+  id: '/work/themevault',
+  path: '/work/themevault',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/work/ai-prep': typeof WorkAiPrepRoute
+  '/work/saviours': typeof WorkSavioursRoute
+  '/work/themevault': typeof WorkThemevaultRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/work/ai-prep': typeof WorkAiPrepRoute
+  '/work/saviours': typeof WorkSavioursRoute
+  '/work/themevault': typeof WorkThemevaultRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/work/ai-prep': typeof WorkAiPrepRoute
+  '/work/saviours': typeof WorkSavioursRoute
+  '/work/themevault': typeof WorkThemevaultRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/work/ai-prep' | '/work/saviours' | '/work/themevault'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/work/ai-prep' | '/work/saviours' | '/work/themevault'
+  id: '__root__' | '/' | '/work/ai-prep' | '/work/saviours' | '/work/themevault'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  WorkAiPrepRoute: typeof WorkAiPrepRoute
+  WorkSavioursRoute: typeof WorkSavioursRoute
+  WorkThemevaultRoute: typeof WorkThemevaultRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/work/ai-prep': {
+      id: '/work/ai-prep'
+      path: '/work/ai-prep'
+      fullPath: '/work/ai-prep'
+      preLoaderRoute: typeof WorkAiPrepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/saviours': {
+      id: '/work/saviours'
+      path: '/work/saviours'
+      fullPath: '/work/saviours'
+      preLoaderRoute: typeof WorkSavioursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/themevault': {
+      id: '/work/themevault'
+      path: '/work/themevault'
+      fullPath: '/work/themevault'
+      preLoaderRoute: typeof WorkThemevaultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  WorkAiPrepRoute: WorkAiPrepRoute,
+  WorkSavioursRoute: WorkSavioursRoute,
+  WorkThemevaultRoute: WorkThemevaultRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
