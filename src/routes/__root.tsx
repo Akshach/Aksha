@@ -76,14 +76,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Akanksha Chaudhary — Product designer & UI/UX designer" },
+      {
+        name: "description",
+        content:
+          "Akanksha Chaudhary is a product designer and Web3 builder creating clear, expressive digital products.",
+      },
+      { name: "author", content: "Akanksha Chaudhary" },
+      { property: "og:title", content: "Akanksha Chaudhary — Product designer" },
+      {
+        property: "og:description",
+        content:
+          "Akanksha Chaudhary is a product designer and Web3 builder creating clear, expressive digital products.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@Aksha1812" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

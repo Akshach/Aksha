@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type FormEvent } from "react";
+import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
 import {
     ArrowDownRight,
     ArrowUpRight,
@@ -9,9 +9,11 @@ import {
     LayoutDashboard,
     Mail,
     Menu,
+    Moon,
     Palette,
     ShieldCheck,
     Sparkles,
+    Sun,
     X,
 } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
@@ -47,6 +49,9 @@ const projects = [
         description:
             "Making onchain threat intelligence understandable before an agent signs a transaction.",
         snapshot: "/saviours-live.png",
+        darkSnapshot: "/saviours-dark.png",
+        lightAspect: "1.03 / 1",
+        darkAspect: "2.12 / 1",
         className: "project-saviours",
         href: "https://www.saviours.xyz/",
         liveLabel: "Open Saviours",
@@ -59,6 +64,9 @@ const projects = [
         description:
             "A focused preparation experience that turns research, study plans, and practice into one flow.",
         snapshot: "/aiprep-live.png",
+        darkSnapshot: "/ai-prep-dark.png",
+        lightAspect: "1.03 / 1",
+        darkAspect: "1.55 / 1",
         className: "project-ai",
         href: "https://aiprep-kappa.vercel.app/",
         liveLabel: "Open AI Prep",
@@ -71,6 +79,9 @@ const projects = [
         description:
             "A playful theme playground for discovering, tuning, and exporting expressive UI systems.",
         snapshot: "/theme-vault.png",
+        darkSnapshot: "/theme-vault-dark.png",
+        lightAspect: "1.71 / 1",
+        darkAspect: "1.73 / 1",
         className: "project-theme",
         href: "https://theme-vaultv1.vercel.app/",
         liveLabel: "Open ThemeVault",
@@ -241,6 +252,8 @@ function handleSubmit(event: FormEvent<HTMLFormElement>) {
 
 function Index() {
     const [cursor, setCursor] = useState({ x: -200, y: -200 });
+    const [isDark, setIsDark] = useState(false);
+    const [themeReady, setThemeReady] = useState(false);
     const [activeShowcase, setActiveShowcase] = useState(0);
     const activeProject = showcaseProjects[activeShowcase];
     const cursorStyle = {
@@ -248,9 +261,21 @@ function Index() {
         "--cursor-y": `${cursor.y}px`,
     } as CSSProperties;
 
+    useEffect(() => {
+        const storedTheme = window.localStorage.getItem("aksha-theme");
+        setIsDark(storedTheme === "dark");
+        setThemeReady(true);
+    }, []);
+
+    useEffect(() => {
+        if (!themeReady) return;
+        document.documentElement.dataset.theme = isDark ? "dark" : "light";
+        window.localStorage.setItem("aksha-theme", isDark ? "dark" : "light");
+    }, [isDark, themeReady]);
+
     return (
         <div
-            className="portfolio-shell min-h-screen overflow-hidden text-foreground"
+            className={`portfolio-shell min-h-screen overflow-hidden text-foreground ${isDark ? "theme-dark" : ""}`}
             style={cursorStyle}
             onPointerMove={(event) => {
                 if (event.pointerType !== "touch") {
@@ -264,6 +289,17 @@ function Index() {
                 <a href="#top" className="brand-mark" aria-label="Akanksha Chaudhary home">
                     AC<span>.</span>
                 </a>
+                <button
+                    className="theme-toggle"
+                    type="button"
+                    aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                    aria-pressed={isDark}
+                    title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                    onClick={() => setIsDark((value) => !value)}
+                >
+                    {isDark ? <Sun size={16} /> : <Moon size={16} />}
+                    <span>{isDark ? "Light" : "Dark"}</span>
+                </button>
                 <nav className="desktop-nav" aria-label="Main navigation">
                     <a href="#work">
                         Work <span>01</span>
@@ -446,10 +482,21 @@ function Index() {
                                 ))}
                             </div>
                         </div>
-                        <div className={`showcase-screen ${activeProject.className}`}>
+                        <div
+                            className={`showcase-screen ${activeProject.className}`}
+                            style={
+                                {
+                                    "--showcase-ratio": isDark ? activeProject.darkAspect : activeProject.lightAspect,
+                                } as CSSProperties
+                            }
+                        >
                             <img
-                                src={activeProject.snapshot}
-                                alt={`${activeProject.name} live product showcase`}
+                                src={
+                                    isDark && activeProject.darkSnapshot
+                                        ? activeProject.darkSnapshot
+                                        : activeProject.snapshot
+                                }
+                                alt={`${activeProject.name} ${isDark ? "dark theme" : "light theme"} product showcase`}
                             />
                             <div className="showcase-caption">
                                 <span>REAL INTERFACE</span>
