@@ -44,13 +44,21 @@ function AiPrepCaseStudy() {
                     </a>
                 </div>
                 <div className="case-hero-visual">
-                    <img src="/aiprep-live.png" alt="AI Prep preparation dashboard" />
+                    <img
+                        src="/aiprep-live.png"
+                        alt="AI Prep preparation dashboard"
+                        width="1440"
+                        height="1400"
+                        fetchPriority="high"
+                        decoding="async"
+                    />
                     <span>LIVE INTERFACE / 02</span>
                 </div>
             </section>
 
             <section className="case-facts" aria-label="Project facts">
                 <div><span>Role</span><strong>Product designer</strong></div>
+                <div><span>Contribution</span><strong>Product flow + trust model</strong></div>
                 <div><span>Focus</span><strong>Trustworthy preparation</strong></div>
                 <div><span>Context</span><strong>AI / interview prep</strong></div>
                 <div><span>Status</span><strong>Beta product</strong></div>
@@ -126,8 +134,8 @@ function AiPrepCaseStudy() {
             <footer className="case-footer">
                 <span>Akanksha Chaudhary · Product, UI/UX & visual design</span>
                 <nav className="case-footer-nav" aria-label="Case study navigation">
-                    <a href="/#work"><ArrowLeft size={13} /> All selected work</a>
-                    <a href="/work/themevault">Next case study <ArrowUpRight size={13} /></a>
+                    <a href="/#work" aria-label="Return to all selected work"><ArrowLeft size={13} /> All selected work</a>
+                    <a href="/work/themevault" aria-label="Read the ThemeVault case study next">Next: ThemeVault <ArrowUpRight size={13} /></a>
                 </nav>
             </footer>
         </main>

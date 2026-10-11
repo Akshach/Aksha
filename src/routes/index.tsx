@@ -56,6 +56,8 @@ const projects = [
         href: "https://www.saviours.xyz/",
         caseStudyHref: "/work/saviours",
         caseStudyStatus: "published" as const,
+        role: "Product design · systems",
+        evidence: "Live product + case study",
         liveLabel: "Open Saviours",
         tags: ["Ethereum", "ENS", "AI agents", "$0 memory hit"],
     },
@@ -73,6 +75,8 @@ const projects = [
         href: "https://aiprep-kappa.vercel.app/",
         caseStudyHref: "/work/ai-prep",
         caseStudyStatus: "published" as const,
+        role: "Product design · UX",
+        evidence: "Live product + case study",
         liveLabel: "Open AI Prep",
         tags: ["UX strategy", "Information architecture"],
     },
@@ -90,6 +94,8 @@ const projects = [
         href: "https://theme-vaultv1.vercel.app/",
         caseStudyHref: "/work/themevault",
         caseStudyStatus: "published" as const,
+        role: "UI/UX · frontend",
+        evidence: "Live product + case study",
         liveLabel: "Open ThemeVault",
         tags: ["Design systems", "React", "Tokens"],
     },
@@ -101,6 +107,8 @@ const projects = [
         className: "project-inview",
         caseStudyHref: null,
         caseStudyStatus: "in-progress" as const,
+        role: "Product · learning",
+        evidence: "Case study in progress",
         liveLabel: "Case study soon",
         tags: ["User flows", "Responsive design"],
     },
@@ -376,7 +384,7 @@ function Index() {
                                 <a href="#work" className="button button-dark">
                                     Explore selected work <ArrowDownRight size={16} />
                                 </a>
-                                <a href={`mailto:${EMAIL}`} className="text-link">
+                                        <a href="#contact" className="text-link">
                                     <Mail size={15} /> Start a conversation
                                 </a>
                             </div>
@@ -466,6 +474,33 @@ function Index() {
                             Real products, real links, and the design decisions behind Web3, AI, and learning
                             tools.
                         </p>
+                    </div>
+                    <div className="work-overview" aria-label="Project overview">
+                        {projects.map((project) => (
+                            <a
+                                key={project.name}
+                                className="work-overview-card"
+                                href={project.caseStudyHref ?? "#contact"}
+                                aria-label={
+                                    project.caseStudyHref
+                                        ? `Read the ${project.name} case study`
+                                        : `Ask about the ${project.name} project`
+                                }
+                            >
+                                <div className="work-overview-topline">
+                                    <span>{project.number}</span>
+                                    <span className={project.caseStudyStatus === "published" ? "status-live" : ""}>
+                                        {project.caseStudyStatus === "published" ? "Published" : "In progress"}
+                                    </span>
+                                </div>
+                                <h3>{project.name}</h3>
+                                <p>{project.description}</p>
+                                <div className="work-overview-meta">
+                                    <span>{project.role}</span>
+                                    <span>{project.evidence}</span>
+                                </div>
+                            </a>
+                        ))}
                     </div>
                     <div className="showcase-shell">
                         <div className="showcase-copy">
@@ -569,11 +604,35 @@ function Index() {
                     </div>
                 </section>
 
+                <section className="collaboration-section mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
+                    <div className="section-intro">
+                        <div className="section-label">
+                            <span>02</span>
+                            <span>How I work</span>
+                        </div>
+                        <p>A flexible design partner for teams turning a rough idea into something people can trust.</p>
+                    </div>
+                    <div className="collaboration-grid">
+                        {[
+                            ["01", "Frame", "Clarify the audience, tension, and decision the product needs to help someone make."],
+                            ["02", "Shape", "Turn messy requirements into a focused flow, visual language, and a shared direction."],
+                            ["03", "Prototype", "Make the idea tangible early, test the edges, and bring engineering into the conversation."],
+                            ["04", "Ship", "Polish the details that make a product feel calm, coherent, and ready for real use."],
+                        ].map(([number, title, description]) => (
+                            <div className="collaboration-step" key={number}>
+                                <span>{number}</span>
+                                <h3>{title}</h3>
+                                <p>{description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
                 <section id="about" className="manifesto-section">
                     <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[0.9fr_1.1fr]">
                         <div>
                             <p className="section-label light">
-                                <span>02</span>
+                            <span>03</span>
                                 <span>Point of view</span>
                             </p>
                             <p className="manifesto-stamp">
@@ -609,13 +668,16 @@ function Index() {
                 >
                     <div className="section-intro">
                         <div className="section-label">
-                            <span>03</span>
+                            <span>04</span>
                             <span>Experience & toolkit</span>
                         </div>
                         <p>
                             A product practice shaped by curiosity, teaching, and getting close to the people
                             using the thing.
                         </p>
+                        <a className="underlined-link section-action" href="/aksha.pdf" target="_blank" rel="noreferrer">
+                            Download résumé <ArrowUpRight size={15} />
+                        </a>
                     </div>
                     <div className="resume-grid">
                         <div className="resume-column">
@@ -675,10 +737,13 @@ function Index() {
                 <section className="experiments-section mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
                     <div className="section-intro">
                         <div className="section-label">
-                            <span>04</span>
+                            <span>05</span>
                             <span>Side quests</span>
                         </div>
-                        <p>Painting, 3D, motion, and visual experiments that keep the work curious.</p>
+                        <p>
+                            Painting, 3D, motion, and visual experiments that keep the work curious. A small
+                            supporting practice behind the interfaces.
+                        </p>
                     </div>
                     <div className="experiment-strip">
                         {experiments.map((src, index) => (
@@ -697,6 +762,10 @@ function Index() {
                             <a className="email-link" href={`mailto:${EMAIL}`}>
                                 {EMAIL} <ArrowUpRight size={17} />
                             </a>
+                            <p className="contact-note">
+                                Share what you are making, where you are stuck, and what a useful next step would
+                                look like. The button opens your email app with the details pre-filled.
+                            </p>
                             <div className="social-links">
                                 <a
                                     href="https://github.com/Akshach"
@@ -723,27 +792,30 @@ function Index() {
                             </div>
                         </div>
                         <form onSubmit={handleSubmit} className="contact-form" aria-label="Contact form">
+                            <label htmlFor="contact-name">Your name</label>
                             <input
+                                id="contact-name"
                                 name="name"
                                 required
                                 autoComplete="name"
-                                aria-label="Your name"
                                 placeholder="Your name"
                             />
+                            <label htmlFor="contact-email">Your email</label>
                             <input
+                                id="contact-email"
                                 name="email"
                                 required
                                 type="email"
                                 autoComplete="email"
-                                aria-label="Your email"
                                 placeholder="Your email"
                             />
+                            <label htmlFor="contact-message">Project details</label>
                             <textarea
+                                id="contact-message"
                                 name="message"
                                 required
                                 rows={3}
-                                aria-label="Project details"
-                                placeholder="Tell me a little about it"
+                                placeholder="What are you making, and what would you like help with?"
                             />
                             <button className="button button-light" type="submit">
                                 Send enquiry <ArrowUpRight size={16} />

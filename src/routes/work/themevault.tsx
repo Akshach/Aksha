@@ -44,13 +44,21 @@ function ThemeVaultCaseStudy() {
                     </a>
                 </div>
                 <div className="case-hero-visual">
-                    <img src="/theme-vault.png" alt="ThemeVault theme playground" />
+                    <img
+                        src="/theme-vault.png"
+                        alt="ThemeVault theme playground"
+                        width="1600"
+                        height="936"
+                        fetchPriority="high"
+                        decoding="async"
+                    />
                     <span>LIVE INTERFACE / 03</span>
                 </div>
             </section>
 
             <section className="case-facts" aria-label="Project facts">
                 <div><span>Role</span><strong>Product designer</strong></div>
+                <div><span>Contribution</span><strong>UI system + interaction flow</strong></div>
                 <div><span>Focus</span><strong>Theme exploration</strong></div>
                 <div><span>Context</span><strong>Design systems / frontend</strong></div>
                 <div><span>Status</span><strong>Live product</strong></div>
@@ -128,8 +136,8 @@ function ThemeVaultCaseStudy() {
             <footer className="case-footer">
                 <span>Akanksha Chaudhary · Product, UI/UX & visual design</span>
                 <nav className="case-footer-nav" aria-label="Case study navigation">
-                    <a href="/#work"><ArrowLeft size={13} /> All selected work</a>
-                    <a href="/work/saviours">Next case study <ArrowUpRight size={13} /></a>
+                    <a href="/#work" aria-label="Return to all selected work"><ArrowLeft size={13} /> All selected work</a>
+                    <a href="/work/saviours" aria-label="Read the Saviours case study next">Next: Saviours <ArrowUpRight size={13} /></a>
                 </nav>
             </footer>
         </main>

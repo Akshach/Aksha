@@ -47,13 +47,21 @@ function SavioursCaseStudy() {
                     </a>
                 </div>
                 <div className="case-hero-visual">
-                    <img src="/saviours-dark.png" alt="Saviours threat review interface" />
+                    <img
+                        src="/saviours-dark.png"
+                        alt="Saviours threat review interface"
+                        width="1600"
+                        height="756"
+                        fetchPriority="high"
+                        decoding="async"
+                    />
                     <span>LIVE INTERFACE / 01</span>
                 </div>
             </section>
 
             <section className="case-facts" aria-label="Project facts">
                 <div><span>Role</span><strong>Product designer</strong></div>
+                <div><span>Contribution</span><strong>Product story + interface</strong></div>
                 <div><span>Focus</span><strong>Threat comprehension</strong></div>
                 <div><span>Context</span><strong>Web3 / AI agents</strong></div>
                 <div><span>Status</span><strong>Live product</strong></div>
@@ -200,8 +208,8 @@ function SavioursCaseStudy() {
             <footer className="case-footer">
                 <span>Akanksha Chaudhary · Product, UI/UX & visual design</span>
                 <nav className="case-footer-nav" aria-label="Case study navigation">
-                    <a href="/#work"><ArrowLeft size={13} /> All selected work</a>
-                    <a href="/work/ai-prep">Next case study <ArrowUpRight size={13} /></a>
+                    <a href="/#work" aria-label="Return to all selected work"><ArrowLeft size={13} /> All selected work</a>
+                    <a href="/work/ai-prep" aria-label="Read the AI Prep case study next">Next: AI Prep <ArrowUpRight size={13} /></a>
                 </nav>
             </footer>
         </main>
