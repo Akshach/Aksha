@@ -1,0 +1,137 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system — "Editorial Glass Case"
+ * Dark ground, glass panels, aurora accents, Fraunces display + Space Grotesk body.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ground: var(--background);
+  --color-ink: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-aurora: var(--aurora);
+  --color-aurora-2: var(--aurora-2);
+  --color-aurora-3: var(--aurora-3);
+  --color-aurora-4: var(--aurora-4);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-line: var(--line);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --animate-marq: marq 26s linear infinite;
+  --animate-drift: drift 18s ease-in-out infinite;
+
+  @keyframes marq {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(4%, -3%) scale(1.12);
+    }
+  }
+}
+
+:root {
+  --radius: 0.875rem;
+  --font-body: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Fraunces", ui-serif, Georgia, serif;
+
+  --background: oklch(0.16 0.014 265);
+  --foreground: oklch(0.925 0.009 265);
+  --card: oklch(0.2 0.014 265);
+  --card-foreground: oklch(0.925 0.009 265);
+  --popover: oklch(0.2 0.014 265);
+  --popover-foreground: oklch(0.925 0.009 265);
+
+  --primary: oklch(0.79 0.121 173);
+  --primary-foreground: oklch(0.16 0.014 265);
+  --secondary: oklch(0.24 0.016 265);
+  --secondary-foreground: oklch(0.925 0.009 265);
+  --muted: oklch(0.24 0.016 265);
+  --muted-foreground: oklch(0.645 0.021 265);
+  --accent: oklch(0.7 0.158 300);
+  --accent-foreground: oklch(0.16 0.014 265);
+
+  --aurora: oklch(0.79 0.121 173);
+  --aurora-2: oklch(0.7 0.158 300);
+  --aurora-3: oklch(0.72 0.135 253);
+  --aurora-4: oklch(0.88 0.105 85);
+
+  --destructive: oklch(0.62 0.21 25);
+  --destructive-foreground: oklch(0.98 0.003 265);
+  --border: oklch(1 0 0 / 10%);
+  --line: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.79 0.121 173);
+}
+
+@utility glass {
+  background-color: color-mix(in oklab, white 4%, transparent);
+  backdrop-filter: blur(20px);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, white 10%, transparent);
+}
+
+@utility aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+  }
+}
